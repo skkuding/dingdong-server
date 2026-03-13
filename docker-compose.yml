@@ -1,0 +1,18 @@
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: dingdong-mariadb
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: "1234"
+      MARIADB_DATABASE: "dingdong"
+      MARIADB_USER: "dingdong"
+      MARIADB_PASSWORD: "1234"
+      TZ: "Asia/Seoul"
+    volumes:
+      - dingdong-db:/var/lib/mysql
+
+volumes:
+  dingdong-db:
