@@ -1,15 +1,15 @@
 services:
-  mariadb:
-    image: mariadb:11
-    container_name: dingdong-mariadb
+  mysql:
+    image: mysql:8.4
+    container_name: dingdong-mysql
     restart: unless-stopped
     ports:
       - "3306:3306"
     environment:
-      MARIADB_ROOT_PASSWORD: "1234"
-      MARIADB_DATABASE: "dingdong"
-      MARIADB_USER: "dingdong"
-      MARIADB_PASSWORD: "1234"
+      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_DATABASE: "dingdong"
+      MYSQL_USER: "dingdong"
+      MYSQL_PASSWORD: "1234"
       TZ: "Asia/Seoul"
     volumes:
       - dingdong-db:/var/lib/mysql
