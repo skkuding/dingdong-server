@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: dingdong
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/skkuding/dingdong-server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          startupProbe:
+            tcpSocket:
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 512Mi
+          env:
+            - name: TZ
+              value: Asia/Seoul
+            - name: SPRING_JPA_SHOW_SQL
+              value: "false"
+            - name: JAVA_OPTS
+              value: -XX:InitialRAMPercentage=25 -XX:MaxRAMPercentage=70 -XX:+UseContainerSupport
+          envFrom:
+            - secretRef:
+                name: dingdong-secrets
