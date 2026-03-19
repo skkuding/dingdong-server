@@ -12,7 +12,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: ${SPRING_JPA_SHOW_SQL:true}
     properties:
       hibernate:
         format_sql: true
@@ -21,3 +21,24 @@ spring:
     compose:
       file: ./docker-compose.yml
       lifecycle-management: start-only
+
+app:
+  auth:
+    jwt:
+      secret: ${APP_AUTH_JWT_SECRET:change-this-jwt-secret-before-production}
+      issuer: ${APP_AUTH_JWT_ISSUER:https://api.ding-dong.tv}
+      access-token-ttl: ${APP_AUTH_JWT_ACCESS_TOKEN_TTL:15m}
+      refresh-token-ttl: ${APP_AUTH_JWT_REFRESH_TOKEN_TTL:30d}
+    oidc:
+      google:
+        discovery-uri: ${APP_AUTH_OIDC_GOOGLE_DISCOVERY_URI:https://accounts.google.com/.well-known/openid-configuration}
+        allowed-issuers: ${APP_AUTH_OIDC_GOOGLE_ALLOWED_ISSUERS:https://accounts.google.com,accounts.google.com}
+        client-ids: ${APP_AUTH_OIDC_GOOGLE_CLIENT_IDS:}
+      kakao:
+        discovery-uri: ${APP_AUTH_OIDC_KAKAO_DISCOVERY_URI:https://kauth.kakao.com/.well-known/openid-configuration}
+        allowed-issuers: ${APP_AUTH_OIDC_KAKAO_ALLOWED_ISSUERS:https://kauth.kakao.com}
+        client-ids: ${APP_AUTH_OIDC_KAKAO_CLIENT_IDS:}
+      apple:
+        discovery-uri: ${APP_AUTH_OIDC_APPLE_DISCOVERY_URI:https://appleid.apple.com/.well-known/openid-configuration}
+        allowed-issuers: ${APP_AUTH_OIDC_APPLE_ALLOWED_ISSUERS:https://appleid.apple.com}
+        client-ids: ${APP_AUTH_OIDC_APPLE_CLIENT_IDS:}

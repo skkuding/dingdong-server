@@ -1,4 +1,4 @@
-package org.example.dingdongserver;
+package org.skkuding.dingdongserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
