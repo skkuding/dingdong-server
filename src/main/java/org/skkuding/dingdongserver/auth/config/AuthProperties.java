@@ -21,17 +21,26 @@ public class AuthProperties {
     }
 
     public static class Jwt {
-        private String secret;
+        private String accessSecret;
+        private String refreshSecret;
         private String issuer = "https://api.ding-dong.tv";
         private Duration accessTokenTtl = Duration.ofMinutes(15);
         private Duration refreshTokenTtl = Duration.ofDays(30);
 
-        public String getSecret() {
-            return secret;
+        public String getAccessSecret() {
+            return accessSecret;
         }
 
-        public void setSecret(String secret) {
-            this.secret = secret;
+        public void setAccessSecret(String accessSecret) {
+            this.accessSecret = accessSecret;
+        }
+
+        public String getRefreshSecret() {
+            return refreshSecret;
+        }
+
+        public void setRefreshSecret(String refreshSecret) {
+            this.refreshSecret = refreshSecret;
         }
 
         public String getIssuer() {

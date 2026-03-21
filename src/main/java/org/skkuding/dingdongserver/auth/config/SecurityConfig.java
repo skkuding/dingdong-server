@@ -16,10 +16,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-
 @Configuration
 public class SecurityConfig {
 
@@ -41,20 +37,19 @@ public class SecurityConfig {
 
     @Bean
     public JwtEncoder jwtEncoder(AuthProperties authProperties) {
-        return new NimbusJwtEncoder(new ImmutableSecret<>(signingKey(authProperties)));
+        return new NimbusJwtEncoder(new ImmutableSecret<>(
+                JwtSecretKeyFactory.hmacSha256(authProperties.getJwt().getAccessSecret(), "AUTH_ACCESS_JWT_SECRET")
+        ));
     }
 
     @Bean
     public JwtDecoder jwtDecoder(AuthProperties authProperties) {
-        NimbusJwtDecoder decoder = NimbusJwtDecoder.withSecretKey(signingKey(authProperties))
+        NimbusJwtDecoder decoder = NimbusJwtDecoder.withSecretKey(
+                        JwtSecretKeyFactory.hmacSha256(authProperties.getJwt().getAccessSecret(), "AUTH_ACCESS_JWT_SECRET")
+                )
                 .macAlgorithm(MacAlgorithm.HS256)
                 .build();
         decoder.setJwtValidator(AppJwtService.appTokenValidator(authProperties.getJwt().getIssuer()));
         return decoder;
-    }
-
-    private SecretKey signingKey(AuthProperties authProperties) {
-        byte[] keyBytes = authProperties.getJwt().getSecret().getBytes(StandardCharsets.UTF_8);
-        return new SecretKeySpec(keyBytes, "HmacSHA256");
     }
 }

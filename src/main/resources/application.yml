@@ -25,7 +25,8 @@ spring:
 app:
   auth:
     jwt:
-      secret: ${APP_AUTH_JWT_SECRET:change-this-jwt-secret-before-production}
+      access-secret: ${AUTH_ACCESS_JWT_SECRET:MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=}
+      refresh-secret: ${AUTH_REFRESH_JWT_SECRET:ZmVkY2JhOTg3NjU0MzIxMGZlZGNiYTk4NzY1NDMyMTA=}
       issuer: ${APP_AUTH_JWT_ISSUER:https://api.ding-dong.tv}
       access-token-ttl: ${APP_AUTH_JWT_ACCESS_TOKEN_TTL:15m}
       refresh-token-ttl: ${APP_AUTH_JWT_REFRESH_TOKEN_TTL:30d}
