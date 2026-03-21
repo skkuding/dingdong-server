@@ -23,11 +23,10 @@ spec:
           ports:
             - containerPort: 3306
           envFrom:
+            - configMapRef:
+                name: dingdong-mysql-config
             - secretRef:
                 name: dingdong-secrets
-          env:
-            - name: TZ
-              value: Asia/Seoul
           startupProbe:
             exec:
               command:

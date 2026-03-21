@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: dingdong
 
 resources:
+  - configmap.yaml
   - service.yaml
   - statefulset.yaml

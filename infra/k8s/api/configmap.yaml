@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dingdong-api-config
+  namespace: dingdong
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+data:
+  TZ: Asia/Seoul
+  SPRING_JPA_SHOW_SQL: "false"
+  JAVA_OPTS: -XX:InitialRAMPercentage=25 -XX:MaxRAMPercentage=70 -XX:+UseContainerSupport
+  APP_AUTH_OIDC_GOOGLE_CLIENT_IDS: 286293550632-rs8t5c3cbhfsb5cqftkpds1pjmdg3i07.apps.googleusercontent.com,286293550632-vn4ftq9f0l6s2m38p9mh4afu170303mo.apps.googleusercontent.com,286293550632-31t2iiviljndav5u0ji6u4nvqjs4bfvu.apps.googleusercontent.com
+  APP_AUTH_OIDC_KAKAO_CLIENT_IDS: 86190e9f0552bbf94012cd05df4470d2,5f8a196630860939c90ca19bd71ec18d
+  APP_AUTH_OIDC_APPLE_CLIENT_IDS: com.joodang.dingdong.sid

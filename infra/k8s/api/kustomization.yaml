@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: dingdong
 
 resources:
+  - configmap.yaml
   - deployment.yaml
   - ingress.yaml
   - service.yaml
